@@ -1,6 +1,6 @@
 import React from 'react';
 import { List, Item, Text, Btn } from './ContactList.styled';
-
+import PropTypes from 'prop-types';
 import { BsFillPersonXFill } from 'react-icons/bs';
 
 export const ContactList = ({ contacts, onDeleteContact }) => {
@@ -20,4 +20,14 @@ export const ContactList = ({ contacts, onDeleteContact }) => {
       </List>
     </div>
   );
+};
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ),
+  onDeleteContact: PropTypes.func.isRequired,
 };

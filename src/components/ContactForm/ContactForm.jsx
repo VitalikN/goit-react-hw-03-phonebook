@@ -1,10 +1,14 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import shortid from 'shortid';
-import { Btn, Input } from './ContactForm.styled';
-
+import { Btn, Input, ErrorM, Label } from './ContactForm.styled';
+import * as Yup from 'yup';
 import { BsFillPersonPlusFill } from 'react-icons/bs';
 
+const SignupSchema = Yup.object().shape({
+  name: Yup.string().min(3, 'Too Short!').max(10, 'Too Long!').required(),
+  number: Yup.string().min(10, 'Too Short!').max(17, 'Too Long!').required(),
+});
 const initialValues = {
   name: '',
   number: '',
@@ -13,6 +17,7 @@ export const ContactForm = ({ onAddContact }) => {
   return (
     <Formik
       initialValues={initialValues}
+      validationSchema={SignupSchema}
       onSubmit={(values, { resetForm }) => {
         onAddContact({ ...values, id: shortid.generate() });
 
@@ -20,7 +25,7 @@ export const ContactForm = ({ onAddContact }) => {
       }}
     >
       <Form>
-        <label>
+        <Label>
           Name
           <Input
             type="text"
@@ -29,8 +34,9 @@ export const ContactForm = ({ onAddContact }) => {
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
           />
-        </label>
-        <label>
+          <ErrorM name="name" component={'span'} />
+        </Label>
+        <Label>
           Number
           <Input
             type="tel"
@@ -39,7 +45,8 @@ export const ContactForm = ({ onAddContact }) => {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
           />
-        </label>
+          <ErrorM name="number" component={'span'} />
+        </Label>
         <Btn type="submit">
           <BsFillPersonPlusFill />
         </Btn>

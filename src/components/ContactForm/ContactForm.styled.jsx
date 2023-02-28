@@ -1,9 +1,12 @@
 import styled from '@emotion/styled';
-import { Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
 
-export const Input = styled(Field)`
+export const Label = styled.label`
   display: flex;
   flex-direction: column;
+`;
+
+export const Input = styled(Field)`
   width: 100%;
   max-width: 300px;
   box-sizing: border-box;
@@ -20,6 +23,9 @@ export const Input = styled(Field)`
     box-shadow: inset 0 1px 3px 1px rgba(0, 0, 0, 0.5),
       inset 0 0 0 60px rgba(0, 0, 0, 0), 0 1px rgba(133, 23, 23, 0.08);
   }
+`;
+export const ErrorM = styled(ErrorMessage)`
+  color: red;
 `;
 
 export const Btn = styled.button`
