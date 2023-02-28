@@ -5,12 +5,15 @@ import { ContactList } from './Сontacts/Сontacts';
 import contacts from './contacts.json';
 import { Filter } from './Filter/filter';
 import { Container, Title } from './App.styled';
+import { Modal } from './Modal/Modal';
 
 export class App extends Component {
   state = {
     contacts: [],
     filter: '',
+    showModal: false,
   };
+
   componentDidMount() {
     const saveContact = localStorage.getItem('contacts');
     if (saveContact !== null) {
@@ -35,6 +38,8 @@ export class App extends Component {
       : this.setState(prevState => ({
           contacts: [...prevState.contacts, newContact],
         }));
+
+    this.toggleModal();
   };
 
   deleteContact = contactId => {
@@ -53,14 +58,28 @@ export class App extends Component {
     );
     return filterContacts;
   };
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
 
   render() {
+    const { filter, showModal } = this.state;
     return (
       <Container>
         <Title>Phonebook</Title>
-        <ContactForm onAddContact={this.addContact} />
+        <button type="button" onClick={this.toggleModal}>
+          відкрити
+        </button>
+        {showModal && (
+          <Modal onClose={this.toggleModal}>
+            <ContactForm onAddContact={this.addContact} />
+          </Modal>
+        )}
+
         <Title>Contacts</Title>
-        <Filter value={this.state.filter} onChange={this.filterContacts} />
+        <Filter value={filter} onChange={this.filterContacts} />
         <ContactList
           contacts={this.onFilterContacts()}
           onDeleteContact={this.deleteContact}
