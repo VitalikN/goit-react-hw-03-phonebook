@@ -8,9 +8,24 @@ import { Container, Title } from './App.styled';
 
 export class App extends Component {
   state = {
-    contacts: contacts,
+    contacts: [],
     filter: '',
   };
+  componentDidMount() {
+    const saveContact = localStorage.getItem('contacts');
+    if (saveContact !== null) {
+      const parseContact = JSON.parse(saveContact);
+      this.setState({ contacts: parseContact });
+      return;
+    }
+    this.setState({ contacts });
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   addContact = newContact => {
     this.state.contacts.filter(
       contact =>
@@ -20,7 +35,6 @@ export class App extends Component {
       : this.setState(prevState => ({
           contacts: [...prevState.contacts, newContact],
         }));
-    console.log(contacts);
   };
 
   deleteContact = contactId => {
