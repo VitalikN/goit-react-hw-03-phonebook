@@ -4,9 +4,9 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './Сontacts/Сontacts';
 import contacts from './contacts.json';
 import { Filter } from './Filter/filter';
-import { Container, Title } from './App.styled';
+import { Container, Title, Btn } from './App.styled';
 import { Modal } from './Modal/Modal';
-
+import { BsFillPersonPlusFill } from 'react-icons/bs';
 export class App extends Component {
   state = {
     contacts: [],
@@ -27,6 +27,12 @@ export class App extends Component {
     if (prevState.contacts !== this.state.contacts) {
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
     }
+    if (
+      this.state.contacts.length > prevState.contacts.length &&
+      prevState.contacts.length !== 0
+    ) {
+      this.toggleModal();
+    }
   }
 
   addContact = newContact => {
@@ -38,9 +44,21 @@ export class App extends Component {
       : this.setState(prevState => ({
           contacts: [...prevState.contacts, newContact],
         }));
-
-    this.toggleModal();
   };
+
+  //  const isExist = this.state.contacts.find(
+  //       contact =>
+  //         contact.name === newContact.name || contact.number === newContact.number
+  //     );
+  //     if (!isExist) {
+  //       this.setState(prevState => ({
+  //         contacts: [...prevState.contacts, newContact],
+  //       }));
+  //       this.toggleModal();
+  //     } else {
+  //       alert(`${newContact.name}: is already in contacts`);
+  //       return;
+  //     }
 
   deleteContact = contactId => {
     this.setState(prevState => ({
@@ -69,9 +87,9 @@ export class App extends Component {
     return (
       <Container>
         <Title>Phonebook</Title>
-        <button type="button" onClick={this.toggleModal}>
-          відкрити
-        </button>
+        <Btn type="button" onClick={this.toggleModal}>
+          <BsFillPersonPlusFill />
+        </Btn>
         {showModal && (
           <Modal onClose={this.toggleModal}>
             <ContactForm onAddContact={this.addContact} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Item, Btn } from './ContactList.styled';
+import { List, Item, Text, Btn } from './ContactList.styled';
 
 import { BsFillPersonXFill } from 'react-icons/bs';
 
@@ -9,9 +9,9 @@ export const ContactList = ({ contacts, onDeleteContact }) => {
       <List>
         {contacts.map(({ id, name, number }) => (
           <Item key={id}>
-            <p>
+            <Text>
               {name}: {number}
-            </p>
+            </Text>
             <Btn type="button" onClick={() => onDeleteContact(id)}>
               <BsFillPersonXFill />
             </Btn>

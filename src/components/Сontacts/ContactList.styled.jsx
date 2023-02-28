@@ -10,6 +10,14 @@ export const Item = styled.li`
   width: 400px;
   margin: 5px;
 `;
+export const Text = styled.p`
+  transition: 0.3s;
+
+  &:hover {
+    transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
+    transform: scale(1.2);
+  }
+`;
 
 export const Btn = styled.button`
   text-align: center;
