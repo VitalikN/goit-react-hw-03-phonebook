@@ -84,15 +84,16 @@ export class App extends Component {
 
   render() {
     const { filter, showModal } = this.state;
+    const { toggleModal, addContact } = this;
     return (
       <Container>
         <Title>Phonebook</Title>
-        <Btn type="button" onClick={this.toggleModal}>
+        <Btn type="button" onClick={toggleModal}>
           <BsFillPersonPlusFill />
         </Btn>
         {showModal && (
-          <Modal onClose={this.toggleModal}>
-            <ContactForm onAddContact={this.addContact} />
+          <Modal onClose={toggleModal}>
+            <ContactForm onAddContact={addContact} />
           </Modal>
         )}
 
